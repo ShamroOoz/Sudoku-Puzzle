@@ -1,15 +1,10 @@
-import React, { useReducer } from "react";
+import React from "react";
 import Header from "./components/Header";
 import Circle from "./components/Circle";
 import Button from "./components/Button";
-import Board from "./components/Board";
-import { appReducer, initialState } from "./Reducer";
 import "./App.css";
 
 const App = () => {
-  const [state, dispatch] = useReducer(appReducer, initialState);
-
-  const { initialBoardState } = state;
   return (
     <div className="App">
       <Header />
@@ -20,12 +15,6 @@ const App = () => {
             classes="btn marginTop15"
             // click={() => dispatch({ type: ACTIONS.OPEN })}
             label="Load New Board"
-          />
-
-          <Board
-            classes="game-board"
-            board={initialBoardState}
-            name="initial"
           />
         </div>
       </div>

@@ -228,20 +228,3 @@
   margin-top: -5px;
   margin-left: 5px;
 }
-
-/* seaction */
-
-.game-section {
-  border: 2px solid #344861;
-  height: 10%;
-  width: 23%;
-  display: inline-block;
-}
-
-/* cell row */
-
-.section-row {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-}

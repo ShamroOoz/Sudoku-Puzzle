@@ -1,15 +1,11 @@
-import React, { useReducer } from "react";
+import React from "react";
 import Header from "./components/Header";
 import Circle from "./components/Circle";
 import Button from "./components/Button";
 import Board from "./components/Board";
-import { appReducer, initialState } from "./Reducer";
 import "./App.css";
 
 const App = () => {
-  const [state, dispatch] = useReducer(appReducer, initialState);
-
-  const { initialBoardState } = state;
   return (
     <div className="App">
       <Header />
@@ -24,7 +20,7 @@ const App = () => {
 
           <Board
             classes="game-board"
-            board={initialBoardState}
+            // board={initialBoardState}
             name="initial"
           />
         </div>

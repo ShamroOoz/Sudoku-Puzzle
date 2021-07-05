@@ -1,0 +1,38 @@
+.App-status-message {
+  line-height: 1.5;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.App-message-row {
+  text-align: left;
+  padding-left: 55px;
+  height: 50px;
+}
+
+.App-status-abort-message {
+  display: inline-block;
+  font-size: 13px;
+  width: 75%;
+  padding-left: 15px;
+  font-weight: 500;
+  text-align: left;
+}
+
+/* seaction */
+
+.game-section {
+  border: 2px solid #344861;
+  height: 5%;
+  width: 23%;
+  display: inline-block;
+}
+/* cell row */
+.section-row {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.game-board {
+  margin-top: inherit;
+}

@@ -1,0 +1,17 @@
+/* seaction */
+
+.game-section {
+  border: 2px solid #6c757d;
+  height: 15%;
+  width: 25%;
+  display: inline-block;
+}
+/* cell row */
+.section-row {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.game-board {
+  margin-top: inherit;
+}

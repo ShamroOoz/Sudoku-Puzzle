@@ -101,7 +101,7 @@ const App = () => {
           </div>
           <Board board={initialBoardState} name="initial" />
           <div>
-            <Button click={() => setisDisplay(false)} label="Back" />
+            <Button click={() => setisDisplay(FALSE)} label="Back to main" />
           </div>
         </Layout>
       )}

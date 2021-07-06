@@ -57,7 +57,6 @@ const App = () => {
       type: ACTIONS.DEFAULT,
       initialstring: generatePuzzle("inhuman"),
     });
-    setisShow(true);
   };
 
   return (
@@ -94,34 +93,13 @@ const App = () => {
           <StatusMessage status={initialBoardStatus} />
         </Layout>
       ) : (
-        // Part 3
+        // Part 2
         <Layout label="3">
           <div>
             <Button click={generateListner} label="Generate" />
           </div>
-          <Board board={initialBoardState} name="initial" />
-          <div>
-            <Button click={() => setisDisplay(false)} label="Back" />
-          </div>
+          <Board board={newBoardString} name="initial" />
         </Layout>
-      )}
-
-      {/* Part 2 */}
-      {isShow && (
-        <>
-          <Layout label="2">
-            <div>
-              <Button click={solverListner} label="Solve" />
-            </div>
-            <Board board={solveBoardState} name="solver" />
-            <div>
-              <Button click={() => clearrListner()} label="Clear" />
-            </div>
-            <StatusMessage status={timerSolveBoard} timeElapsed={timeElapsed} />
-            <StatusMessage status={solveBoardStatus} />
-            <StatusMessage status={solveBoardAbort} />
-          </Layout>
-        </>
       )}
     </div>
   );

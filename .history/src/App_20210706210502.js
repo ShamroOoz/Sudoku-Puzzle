@@ -100,9 +100,6 @@ const App = () => {
             <Button click={generateListner} label="Generate" />
           </div>
           <Board board={initialBoardState} name="initial" />
-          <div>
-            <Button click={() => setisDisplay(false)} label="Back" />
-          </div>
         </Layout>
       )}
 

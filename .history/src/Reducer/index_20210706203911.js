@@ -78,4 +78,5 @@ export const initialState = {
   timeElapsed: 0,
   timerSolveBoard: STATUS.UNKNOWN,
   isSolving: false,
+  newBoardString: null,
 };

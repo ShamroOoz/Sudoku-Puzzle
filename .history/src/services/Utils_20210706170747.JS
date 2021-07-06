@@ -316,7 +316,7 @@ export const stopTimer = (startTimer) => {
   return Date.now() - startTimer;
 };
 
-export const _get_all_units = (rows, cols) => {
+export const get_all_units = (rows, cols) => {
   /* Return a list of all units (rows, cols, boxes)
    */
   var units = [];

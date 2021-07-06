@@ -290,7 +290,9 @@ export const stringBoardValidation = async (entryString) => {
 
 export const getinitialSudokuString = async (url) => {
   try {
-    const API_URL = `http://localhost:3000/${url}.txt`;
+    const API_URL =
+      process.env.PUBLIC_FRONTEND_URL + `/${url}.txt` ||
+      `http://localhost:3000/${url}.txt`;
 
     const res = await fetch(API_URL);
     const initialString = await res.text();
@@ -301,7 +303,7 @@ export const getinitialSudokuString = async (url) => {
       console.log("something wrong with string");
       return false;
     }
-    console.log(parseGridstring);
+
     return parseGridstring;
   } catch (error) {
     console.log(error);
@@ -314,97 +316,4 @@ export const startTimer = () => {
 
 export const stopTimer = (startTimer) => {
   return Date.now() - startTimer;
-};
-
-export const _get_all_units = (rows, cols) => {
-  /* Return a list of all units (rows, cols, boxes)
-   */
-  var units = [];
-
-  // Rows
-  for (var ri in rows) {
-    units.push(cross(rows[ri], cols));
-  }
-
-  // Columns
-  for (var ci in cols) {
-    units.push(cross(rows, cols[ci]));
-  }
-
-  // Boxes
-  var row_squares = ["ABC", "DEF", "GHI"];
-  var col_squares = ["123", "456", "789"];
-  for (var rsi in row_squares) {
-    for (var csi in col_squares) {
-      units.push(cross(row_squares[rsi], col_squares[csi]));
-    }
-  }
-
-  return units;
-};
-
-export const _get_square_units_map = (squares, units) => {
-  /* Return a map of `squares` and their associated units (row, col, box)
-   */
-  var square_unit_map = {};
-
-  // For every square...
-  for (var si in squares) {
-    var cur_square = squares[si];
-
-    // Maintain a list of the current square's units
-    var cur_square_units = [];
-
-    // Look through the units, and see if the current square is in it,
-    // and if so, add it to the list of of the square's units.
-    for (var ui in units) {
-      var cur_unit = units[ui];
-
-      if (cur_unit.indexOf(cur_square) !== -1) {
-        cur_square_units.push(cur_unit);
-      }
-    }
-
-    // Save the current square and its units to the map
-    square_unit_map[cur_square] = cur_square_units;
-  }
-
-  return square_unit_map;
-};
-
-export const _get_square_peers_map = (squares, units_map) => {
-  /* Return a map of `squares` and their associated peers, i.e., a set of
-        other squares in the square's unit.
-        */
-  var square_peers_map = {};
-
-  // For every square...
-  for (var si in squares) {
-    var cur_square = squares[si];
-    var cur_square_units = units_map[cur_square];
-
-    // Maintain list of the current square's peers
-    var cur_square_peers = [];
-
-    // Look through the current square's units map...
-    for (var sui in cur_square_units) {
-      var cur_unit = cur_square_units[sui];
-
-      for (var ui in cur_unit) {
-        var cur_unit_square = cur_unit[ui];
-
-        if (
-          cur_square_peers.indexOf(cur_unit_square) === -1 &&
-          cur_unit_square !== cur_square
-        ) {
-          cur_square_peers.push(cur_unit_square);
-        }
-      }
-    }
-
-    // Save the current square an its associated peers to the map
-    square_peers_map[cur_square] = cur_square_peers;
-  }
-
-  return square_peers_map;
 };

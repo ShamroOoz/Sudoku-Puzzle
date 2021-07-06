@@ -57,7 +57,6 @@ const App = () => {
       type: ACTIONS.DEFAULT,
       initialstring: generatePuzzle("inhuman"),
     });
-    setisShow(true);
   };
 
   return (
@@ -99,10 +98,7 @@ const App = () => {
           <div>
             <Button click={generateListner} label="Generate" />
           </div>
-          <Board board={initialBoardState} name="initial" />
-          <div>
-            <Button click={() => setisDisplay(false)} label="Back" />
-          </div>
+          <Board board={newBoardString} name="initial" />
         </Layout>
       )}
 

@@ -16,7 +16,6 @@ import { generatePuzzle } from "./services/generater";
 
 const App = () => {
   const [state, dispatch] = useReducer(appReducer, initialState);
-  const [isDisplay, setisDisplay] = useState(false);
   const [isShow, setisShow] = useState(false);
   const {
     initialBoardParsed,
@@ -31,11 +30,15 @@ const App = () => {
     newBoardString,
   } = state;
 
+  // useEffect(() => {
+  //   generatePuzzle("inhuman");
+  // }, []);
+
   const solverListner = async () => {
     try {
-      dispatch({ type: ACTIONS.SOLVE });
       const result = await Solver(initialBoardParsed);
       dispatch({ type: ACTIONS.SUCCESS, result: result });
+      dispatch({ type: ACTIONS.SOLVE });
     } catch (error) {
       console.log(error);
     }
@@ -57,56 +60,34 @@ const App = () => {
       type: ACTIONS.DEFAULT,
       initialstring: generatePuzzle("inhuman"),
     });
-    setisShow(true);
   };
 
   return (
     <div>
-      <Header />
       {isSolving && <Loading />}
-
-      {!isDisplay ? (
-        // part 1
-        <Layout label="1">
-          <Board board={initialBoardState} name="initial" />
-          <div className="space-x-3">
-            <Button
-              click={() => getinitialstringListner("easy")}
-              label="Puzzle 1"
-            />
-            <Button
-              click={() => getinitialstringListner("medium")}
-              label="Puzzle 2"
-            />
-            <Button
-              click={() => getinitialstringListner("hard")}
-              label="Puzzle 3"
-            />
-            <Button
-              click={() => getinitialstringListner("evil")}
-              label="Puzzle 4"
-            />
-          </div>
-          <div>
-            <Button click={() => setisDisplay(true)} label="Generate" />
-          </div>
-
-          <StatusMessage status={initialBoardStatus} />
-        </Layout>
-      ) : (
-        // Part 3
-        <Layout label="3">
-          <div>
-            <Button click={generateListner} label="Generate" />
-          </div>
-          <Board board={initialBoardState} name="initial" />
-          <div>
-            <Button click={() => setisDisplay(false)} label="Back" />
-          </div>
-        </Layout>
-      )}
-
-      {/* Part 2 */}
+      <Header />
+      <Layout label="1">
+        <Board board={initialBoardState} name="initial" />
+        <div className="space-x-3">
+          <Button
+            click={() => getinitialstringListner("easy")}
+            label="Puzzle 1"
+          />
+          <Button
+            click={() => getinitialstringListner("medium")}
+            label="Puzzle 2"
+          />
+          <Button
+            click={() => getinitialstringListner("hard")}
+            label="Puzzle 3"
+          />
+          <Button
+            click={() => getinitialstringListner("evil")}
+            label="Puzzle 4"
+          />
+        </div>
+        <StatusMessage status={initialBoardStatus} />
+      </Layout>
       {isShow && (
         <>
           <Layout label="2">
@@ -123,6 +104,12 @@ const App = () => {
           </Layout>
         </>
       )}
+      <Layout label="3">
+        <div>
+          <Button click={generateListner} label="Generate" />
+        </div>
+        <Board board={newBoardString} name="initial" />
+      </Layout>
     </div>
   );
 };

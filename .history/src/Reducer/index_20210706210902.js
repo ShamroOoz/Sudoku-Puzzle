@@ -13,6 +13,7 @@ const reset = (state) => {
     solveBoardAbort: STATUS.UNKNOWN,
     timerSolveBoard: STATUS.UNKNOWN,
     timeElapsed: 0,
+    newBoardString: null,
   };
 };
 export const appReducer = (state, action) => {

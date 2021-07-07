@@ -16,4 +16,4 @@ This project bootstrapped with [Create React App](https://github.com/facebook/cr
 
 ### Deployment
 
-Live Demo: [Live](https://facebook.github.io/create-react-app/docs/deployment)
+Live Demo: [Live](https://sudoku-puzzle-qlik.netlify.app/)

@@ -1,6 +1,6 @@
 /* seaction */
 .game-section {
-  border: 2px solid #14213d;
+  border: 2px solid #6c757d;
   height: 15%;
   width: 25%;
   display: inline-block;
@@ -16,8 +16,8 @@
   flex-basis: 5%;
   box-sizing: border-box;
   position: relative;
-  border-right: 1px solid #8d99ae;
-  border-bottom: 1px solid #e5e5e5;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
   cursor: pointer;
   transform: translateZ(0);
   padding: 0;

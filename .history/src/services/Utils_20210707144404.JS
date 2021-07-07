@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import {
   digits,
   rows,
@@ -411,21 +410,24 @@ export const _get_square_peers_map = (squares, units_map) => {
 };
 
 export const difficultyCounter = (grid) => {
+  console.log(grid);
   let count = 0;
   grid.split("").map((cell) => {
     if (cell !== ".") count++;
+    return "";
   });
-  if (between(count, 17, 26)) {
-    return DIFFICULTY[4];
-  } else if (between(count, 27, 35)) {
-    return DIFFICULTY[3];
-  } else if (between(count, 36, 44)) {
-    return DIFFICULTY[2];
-  } else if (between(count, 45, 53)) {
-    return DIFFICULTY[1];
-  } else {
-    return DIFFICULTY[0];
-  }
+  console.log(count);
+  // if (between(count, 17, 26)) {
+  //   return DIFFICULTY[4];
+  // } else if (between(count, 27, 35)) {
+  //   return DIFFICULTY[3];
+  // } else if (between(count, 36, 44)) {
+  //   return DIFFICULTY[2];
+  // } else if (between(count, 45, 53)) {
+  //   return DIFFICULTY[1];
+  // } else {
+  //   return DIFFICULTY[0];
+  // }
 };
 
 export const between = (x, min, max) => {

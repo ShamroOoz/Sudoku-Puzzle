@@ -19,7 +19,6 @@ const App = () => {
   const [isDisplay, setisDisplay] = useState(false);
   const [isShow, setisShow] = useState(false);
   const {
-    currentBoardString,
     initialBoardParsed,
     initialBoardState,
     initialBoardStatus,
@@ -29,14 +28,12 @@ const App = () => {
     solveBoardStatus,
     solveBoardAbort,
     isSolving,
-    boardDifficultyStatus,
-    boardDifficulty,
   } = state;
 
   const solverListner = async () => {
     try {
       dispatch({ type: ACTIONS.SOLVE });
-      const result = await Solver(initialBoardParsed, currentBoardString);
+      const result = await Solver(initialBoardParsed);
       dispatch({ type: ACTIONS.SUCCESS, result: result });
     } catch (error) {
       console.log(error);
@@ -119,10 +116,6 @@ const App = () => {
             <div>
               <Button click={() => clearrListner()} label="Clear" />
             </div>
-            <StatusMessage
-              status={boardDifficultyStatus}
-              timeElapsed={boardDifficulty}
-            />
             <StatusMessage status={timerSolveBoard} timeElapsed={timeElapsed} />
             <StatusMessage status={solveBoardStatus} />
             <StatusMessage status={solveBoardAbort} />

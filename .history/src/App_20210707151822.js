@@ -119,12 +119,12 @@ const App = () => {
             <div>
               <Button click={() => clearrListner()} label="Clear" />
             </div>
+            <StatusMessage status={timerSolveBoard} timeElapsed={timeElapsed} />
+            <StatusMessage status={solveBoardStatus} />
             <StatusMessage
               status={boardDifficultyStatus}
               timeElapsed={boardDifficulty}
             />
-            <StatusMessage status={timerSolveBoard} timeElapsed={timeElapsed} />
-            <StatusMessage status={solveBoardStatus} />
             <StatusMessage status={solveBoardAbort} />
           </Layout>
         </>

@@ -29,8 +29,6 @@ const App = () => {
     solveBoardStatus,
     solveBoardAbort,
     isSolving,
-    boardDifficultyStatus,
-    boardDifficulty,
   } = state;
 
   const solverListner = async () => {
@@ -119,10 +117,6 @@ const App = () => {
             <div>
               <Button click={() => clearrListner()} label="Clear" />
             </div>
-            <StatusMessage
-              status={boardDifficultyStatus}
-              timeElapsed={boardDifficulty}
-            />
             <StatusMessage status={timerSolveBoard} timeElapsed={timeElapsed} />
             <StatusMessage status={solveBoardStatus} />
             <StatusMessage status={solveBoardAbort} />

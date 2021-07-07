@@ -23,7 +23,10 @@ const StatusMessage = ({ status, timeElapsed }) => {
       return (
         <div className="flex items-center justify-center">
           <AdjustmentsIcon className="w-5 h-5 mr-3 text-green-500" />
-          <h5 className="capitalize"> Difficulty Level : {timeElapsed}</h5>
+          <h5 className="font-semibold capitalize">
+            {" "}
+            DIFFICULTYLevel : {timeElapsed}
+          </h5>
         </div>
       );
     }

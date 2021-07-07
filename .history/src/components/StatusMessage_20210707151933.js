@@ -6,7 +6,6 @@ import {
   ClockIcon,
   InformationCircleIcon,
   XCircleIcon,
-  AdjustmentsIcon,
 } from "@heroicons/react/solid";
 
 const StatusMessage = ({ status, timeElapsed }) => {
@@ -22,8 +21,8 @@ const StatusMessage = ({ status, timeElapsed }) => {
     case STATUS.DIFFICULTY: {
       return (
         <div className="flex items-center justify-center">
-          <AdjustmentsIcon className="w-5 h-5 mr-3 text-green-500" />
-          <h5 className="capitalize"> Difficulty Level : {timeElapsed}</h5>
+          <CheckCircleIcon className="w-5 h-5 mr-3 text-green-500" />
+          <h5 className="text-lg capitalize">{timeElapsed}</h5>
         </div>
       );
     }

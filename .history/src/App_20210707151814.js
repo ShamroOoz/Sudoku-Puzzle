@@ -29,7 +29,7 @@ const App = () => {
     solveBoardStatus,
     solveBoardAbort,
     isSolving,
-    boardDifficultyStatus,
+    boardDifficultyStatus
     boardDifficulty,
   } = state;
 
@@ -119,12 +119,9 @@ const App = () => {
             <div>
               <Button click={() => clearrListner()} label="Clear" />
             </div>
-            <StatusMessage
-              status={boardDifficultyStatus}
-              timeElapsed={boardDifficulty}
-            />
             <StatusMessage status={timerSolveBoard} timeElapsed={timeElapsed} />
             <StatusMessage status={solveBoardStatus} />
+            <StatusMessage status={boardDifficultyStatus} timeElapsed={ boardDifficulty} />
             <StatusMessage status={solveBoardAbort} />
           </Layout>
         </>

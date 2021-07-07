@@ -38,7 +38,6 @@ export const STATUS = {
   UNKNOWN: "unknown",
   TIMER: "timer",
   SOLVE: "solve",
-  DIFFICULTY: "difficulty",
 };
 
 export const STRING_BOARD_LENGTH = 81;

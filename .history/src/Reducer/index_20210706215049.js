@@ -13,8 +13,6 @@ const reset = (state) => {
     solveBoardAbort: STATUS.UNKNOWN,
     timerSolveBoard: STATUS.UNKNOWN,
     timeElapsed: 0,
-    boardDifficultyStatus: STATUS.UNKNOWN,
-    boardDifficulty: STATUS.UNKNOWN,
   };
 };
 export const appReducer = (state, action) => {
@@ -38,10 +36,6 @@ export const appReducer = (state, action) => {
         solveBoardAbort: result.abort ? STATUS.ABORT : STATUS.UNKNOWN,
         timerSolveBoard: result.abort ? STATUS.ABORT : STATUS.TIMER,
         timeElapsed: result.timer.toFixed(2),
-        boardDifficultyStatus: result.difficulty
-          ? STATUS.DIFFICULTY
-          : STATUS.UNKNOWN,
-        boardDifficulty: result.difficulty ? result.difficulty : STATUS.UNKNOWN,
         solveBoardState: getBoardState(resultBoardParsed),
         initialBoardParsed: initialBoardParsed,
         initialBoardState: getBoardState(initialBoardParsed),
@@ -82,9 +76,7 @@ export const initialState = {
   initialBoardStatus: STATUS.UNKNOWN,
   solveBoardStatus: STATUS.UNKNOWN,
   solveBoardAbort: false,
-  boardDifficultyStatus: STATUS.UNKNOWN,
-  boardDifficulty: STATUS.UNKNOWN,
-  timeElapsed: STATUS.UNKNOWN,
+  timeElapsed: 0,
   timerSolveBoard: STATUS.UNKNOWN,
   isSolving: false,
 };

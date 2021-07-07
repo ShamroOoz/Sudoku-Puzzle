@@ -18,7 +18,6 @@ import {
   getSquaresWithFewestCandidates,
   copy,
   some,
-  difficultyCounter,
 } from "./Utils";
 
 export const assign = (values, square, digit) => {
@@ -242,6 +241,7 @@ export const eliminatePeerValues = (peers, values, digit) =>
   all(peers, (sq) => eliminate(values, sq, digit));
 
 const Solver = async (values, grid) => {
+  console.log(grid);
   let loopCounter = 0;
   const loopLimit = 5;
   let isAborted,
@@ -256,7 +256,7 @@ const Solver = async (values, grid) => {
     status: solved ? STATUS.VALID : STATUS.INVALID,
     abort: isAborted,
     completed: completed,
-    difficulty: difficultyCounter(grid),
+    difficult: false,
   };
 
   if (completed) return solveBoardResult;

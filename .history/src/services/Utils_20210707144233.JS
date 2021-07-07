@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import {
   digits,
   rows,
@@ -414,7 +413,9 @@ export const difficultyCounter = (grid) => {
   let count = 0;
   grid.split("").map((cell) => {
     if (cell !== ".") count++;
+    return "";
   });
+  console.log(count);
   if (between(count, 17, 26)) {
     return DIFFICULTY[4];
   } else if (between(count, 27, 35)) {

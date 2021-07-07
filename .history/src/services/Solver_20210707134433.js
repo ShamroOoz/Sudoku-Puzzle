@@ -256,7 +256,7 @@ const Solver = async (values, grid) => {
     status: solved ? STATUS.VALID : STATUS.INVALID,
     abort: isAborted,
     completed: completed,
-    difficulty: difficultyCounter(grid),
+    // difficult: difficultyCounter(),
   };
 
   if (completed) return solveBoardResult;

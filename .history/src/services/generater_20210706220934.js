@@ -1,6 +1,6 @@
 /* eslint-disable no-redeclare */
 /* eslint-disable no-throw-literal */
-import { rows, cols } from "./Constants";
+import { rows, cols, DIFFICULTY } from "./Constants";
 import { parseGrid } from "./Solver";
 import {
   cross,
@@ -9,14 +9,6 @@ import {
   _get_square_peers_map,
 } from "./Utils";
 
-const DIFFICULTY = {
-  easy: 62,
-  medium: 53,
-  hard: 44,
-  "very-hard": 35,
-  insane: 26,
-  inhuman: 17,
-};
 var DIGITS = "123456789";
 var BLANK_CHAR = ".";
 

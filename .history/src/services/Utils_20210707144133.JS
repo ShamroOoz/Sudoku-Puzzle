@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import {
   digits,
   rows,
@@ -412,8 +411,10 @@ export const _get_square_peers_map = (squares, units_map) => {
 
 export const difficultyCounter = (grid) => {
   let count = 0;
-  grid.split("").map((cell) => {
+  const rows = grid.split("");
+  rows.map((cell) => {
     if (cell !== ".") count++;
+    return "";
   });
   if (between(count, 17, 26)) {
     return DIFFICULTY[4];

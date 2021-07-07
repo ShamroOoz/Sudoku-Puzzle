@@ -13,8 +13,6 @@ const reset = (state) => {
     solveBoardAbort: STATUS.UNKNOWN,
     timerSolveBoard: STATUS.UNKNOWN,
     timeElapsed: 0,
-    boardDifficultyStatus: STATUS.UNKNOWN,
-    boardDifficulty: STATUS.UNKNOWN,
   };
 };
 export const appReducer = (state, action) => {
@@ -30,6 +28,7 @@ export const appReducer = (state, action) => {
       const initialBoardParsed = parseGrid(state.currentBoardString);
       const result = action.result;
       const resultBoardParsed = result.board;
+      console.log(result.difficulty);
       return {
         ...state,
         isSolving: false,

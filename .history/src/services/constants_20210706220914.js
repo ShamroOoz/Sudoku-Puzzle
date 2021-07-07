@@ -22,7 +22,14 @@ export const STRATEGIES = {
   BACKTRACKING: "Backtracking search",
 };
 
-export const DIFFICULTY = ["easy", "medium", "hard", "insane", "inhuman"];
+export const DIFFICULTY = {
+  easy: 62,
+  medium: 53,
+  hard: 44,
+  "very-hard": 35,
+  insane: 26,
+  inhuman: 17,
+};
 export const ACTIONS = {
   DEFAULT: "use default",
   SUCCESS: "success",
@@ -38,7 +45,6 @@ export const STATUS = {
   UNKNOWN: "unknown",
   TIMER: "timer",
   SOLVE: "solve",
-  DIFFICULTY: "difficulty",
 };
 
 export const STRING_BOARD_LENGTH = 81;

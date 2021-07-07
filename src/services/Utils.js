@@ -292,7 +292,7 @@ export const stringBoardValidation = async (entryString) => {
 
 export const getinitialSudokuString = async (url) => {
   try {
-    const API_URL = `http://localhost:3000/${url}.txt`;
+    const API_URL = `https://sudoku-puzzle-qlik.netlify.app/${url}.txt`;
 
     const res = await fetch(API_URL);
     const initialString = await res.text();

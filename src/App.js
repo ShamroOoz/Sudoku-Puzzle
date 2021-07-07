@@ -52,11 +52,14 @@ const App = () => {
     setdifficultyState(null);
   };
 
-  const getinitialstringListner = (url) => {
-    getinitialSudokuString(url).then((initialstring) => {
+  const getinitialstringListner = async (url) => {
+    try {
+      const initialstring = await getinitialSudokuString(url);
       dispatch({ type: ACTIONS.DEFAULT, initialstring: initialstring });
       setisShow(true);
-    });
+    } catch (error) {
+      console.log(error);
+    }
   };
   const generateListner = () => {
     dispatch({

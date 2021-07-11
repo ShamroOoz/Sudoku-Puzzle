@@ -7,14 +7,7 @@ import {
   all,
   isSolved,
   isCompleted,
-  sectionList,
-  unsolvedSquares,
   units,
-  getSquareUnitRowCol,
-  getPeers,
-  hasPairValues,
-  canEliminate,
-  getPairSquares,
   getSquaresWithFewestCandidates,
   copy,
   some,
@@ -119,9 +112,6 @@ const gridValues = (grid) => {
 };
 
 export const search = (values) => {
-  // Set a global flag to stop collecting solution steps
-  // setSolverStrategy(STRATEGIES.BACKTRACKING);
-
   // Failed earlier
   if (!values) return false;
 
@@ -138,109 +128,8 @@ export const search = (values) => {
 
 /************************** End Backtrack Search  ***********************************/
 
-/**
- * Pointing Pairs with Constraint Propagation
- *
- * Looking at each unsolved unit in turn there may be two occurrences
- * of a particular digit. If these digits are aligned on a single row or column,
- * we can remove any digit occurs anywhere else on the row or column outside the unit
- *
- */
-export const searchPointPair = async (values) => {
-  // Failed earlier
-  if (!values) return false;
-
-  // Solved!
-  if (isCompleted(values)) return values;
-
-  for (const section of sectionList) {
-    for (const square of unsolvedSquares(section, values)) {
-      const digits = values[square].split("");
-      if (!all(digits, (digit) => findPointPair(values, square, digit))) {
-        return false;
-      }
-    }
-  }
-  return values;
-};
-
-export const findPointPair = (values, square, digit) => {
-  const [unitCol, unitRow, unit] = units[square];
-  const [unitRows, unitCols] = getSquareUnitRowCol(unit, square);
-  const [rowPeers, colPeers, unitRowPeers, unitColPeers] = getPeers(
-    unit,
-    unitRow,
-    unitRows,
-    unitCol,
-    unitCols,
-    values
-  );
-
-  if (hasPairValues(unit, values, digit)) {
-    if (hasPairValues(unitRows, values, digit)) {
-      // aligned on a single row
-      const areRowPeerValuesEliminated = eliminatePeerValues(
-        rowPeers,
-        values,
-        digit
-      );
-      if (areRowPeerValuesEliminated) {
-        getPairSquares(unitRows, values, digit);
-        // log(STRATEGIES.POINTING_PAIRS, pairSquaresCol, digit);
-      }
-    } else if (hasPairValues(unitCols, values, digit)) {
-      // aligned on a single column
-      const areColPeerValuesEliminated = eliminatePeerValues(
-        colPeers,
-        values,
-        digit
-      );
-      if (areColPeerValuesEliminated) {
-        getPairSquares(unitCols, values, digit);
-        // log(STRATEGIES.POINTING_PAIRS, pairSquaresRow, digit);
-      }
-    }
-  } else if (
-    hasPairValues(unitCols, values, digit) &&
-    !canEliminate(colPeers, values, digit)
-  ) {
-    const areUnitColPeerValuesEliminated = eliminatePeerValues(
-      unitColPeers,
-      values,
-      digit
-    );
-    if (areUnitColPeerValuesEliminated) {
-      getPairSquares(unitCols, values, digit);
-      // log(STRATEGIES.POINTING_PAIRS, pairSquaresCol, digit);
-    }
-  } else if (
-    hasPairValues(unitRows, values, digit) &&
-    !canEliminate(rowPeers, values, digit)
-  ) {
-    const areUnitRowPeerValuesEliminated = eliminatePeerValues(
-      unitRowPeers,
-      values,
-      digit
-    );
-    if (areUnitRowPeerValuesEliminated) {
-      getPairSquares(unitRows, values, digit);
-      // log(STRATEGIES.POINTING_PAIRS, pairSquaresRow, digit);
-    }
-  }
-
-  return values;
-};
-
-export const eliminatePeerValues = (peers, values, digit) =>
-  canEliminate(peers, values, digit) &&
-  all(peers, (sq) => eliminate(values, sq, digit));
-
-const Solver = async (values, grid) => {
-  let loopCounter = 0;
-  const loopLimit = 5;
-  let isAborted,
-    stopLoop = false;
-
+export const Solver = async (values, grid) => {
+  let isAborted = false;
   let solved = isSolved(values);
   let completed = solved || isCompleted(values);
 
@@ -256,29 +145,17 @@ const Solver = async (values, grid) => {
   if (completed) return solveBoardResult;
 
   let analysisBoard = values;
-
   let solveTimer = startTimer();
 
   try {
     // Loop until the board is solved or completed or aborted.
     // This in case the board will be returned with a non valid state.
-    while (!solved && !completed && !stopLoop) {
-      // Start solving strategies
-      analysisBoard = await searchPointPair(analysisBoard);
-
+    while (!solved && !completed) {
+      // if board is still unsolved, use backtrack search
+      analysisBoard = search(analysisBoard);
       solved = isSolved(analysisBoard);
       completed = isCompleted(analysisBoard);
-
-      loopCounter++;
-
-      if (!solved && loopCounter >= loopLimit) {
-        // if board is still unsolved, use backtrack search
-        analysisBoard = search(analysisBoard);
-        solved = isSolved(analysisBoard);
-        completed = isCompleted(analysisBoard);
-        isAborted = !solved;
-        stopLoop = true;
-      }
+      isAborted = !solved;
     }
 
     solveBoardResult.board = analysisBoard;
@@ -287,14 +164,9 @@ const Solver = async (values, grid) => {
     solveBoardResult.abort = isAborted;
     solveBoardResult.completed = completed;
 
-    if (!solved) {
-      console.log(analysisBoard);
-    }
     return solveBoardResult;
   } catch (error) {
     console.log(error);
     return solveBoardResult;
   }
 };
-
-export default Solver;

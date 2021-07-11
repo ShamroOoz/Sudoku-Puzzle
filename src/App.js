@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useState, useCallback } from "react";
 import {
   Header,
   Button,
@@ -12,7 +12,7 @@ import {
 import { appReducer, initialState } from "./Reducer";
 import { ACTIONS } from "./services/Constants";
 import { getinitialSudokuString } from "./services/Utils";
-import Solver from "./services/Solver";
+import { Solver } from "./services/Solver";
 import { generatePuzzle } from "./services/generater";
 
 const App = () => {
@@ -45,12 +45,11 @@ const App = () => {
     }
   };
 
-  const clearrListner = () => {
+  const clearrListner = useCallback(() => {
     setdifficultyState(null);
     dispatch({ type: ACTIONS.CLEAR });
     setisShow(false);
-    setdifficultyState(null);
-  };
+  }, [setdifficultyState, setisShow]);
 
   const getinitialstringListner = async (url) => {
     try {
@@ -112,7 +111,13 @@ const App = () => {
           </div>
           <Board board={initialBoardState} name="initial" />
           <div>
-            <Button click={() => setisDisplay(false)} label="Back" />
+            <Button
+              click={() => {
+                setisDisplay(false);
+                clearrListner();
+              }}
+              label="Back"
+            />
           </div>
         </Layout>
       )}

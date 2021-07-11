@@ -15,8 +15,6 @@ export const cCols = [
   ["7", "8", "9"],
 ];
 
-// Pointing Pair in cells
-
 export const DIFFICULTY = {
   Easy: 62,
   Medium: 53,

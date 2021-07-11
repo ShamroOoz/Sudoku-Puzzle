@@ -60,10 +60,18 @@ export const appReducer = (state, action) => {
       const initialBoardParsed = parseGrid(action.initialstring);
       return {
         ...reset(state),
-        currentBoardString: action.initialstring,
-        initialBoardParsed: initialBoardParsed,
-        initialBoardState: getBoardState(initialBoardParsed),
-        solveBoardState: getBoardState(initialBoardParsed),
+        currentBoardString: initialBoardParsed
+          ? action.initialstring
+          : emptySudokuString,
+        initialBoardParsed: initialBoardParsed
+          ? initialBoardParsed
+          : emptyBoardParsed,
+        initialBoardState: getBoardState(
+          initialBoardParsed ? initialBoardParsed : emptyBoardParsed
+        ),
+        solveBoardState: getBoardState(
+          initialBoardParsed ? initialBoardParsed : null
+        ),
       };
     }
     default: {

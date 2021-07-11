@@ -37,6 +37,7 @@ export const Squares = () => {
 export const squares = Squares();
 
 export const SectionList = () => {
+  //return [[3x3 => unit]] 9 time
   const sectionList = [];
   for (const rs of rRows) {
     for (const cs of cCols) {
@@ -87,12 +88,13 @@ export const peers = Peers();
 const getSectionUnits = (sectionNumber, values) => {
   let cellRows = [];
   let sectionRow = [];
-  for (let i = 1; i <= sectionList[sectionNumber - 1].length; i++) {
+  for (let i = 1; i <= 9; i++) {
     const unit = sectionList[sectionNumber - 1][i - 1];
     sectionRow.push({
       key: unit,
       value: values[unit].length === 1 ? values[unit] : ".",
     });
+
     if (i % 3 === 0) {
       cellRows = [...cellRows, sectionRow];
       sectionRow = [];
@@ -154,40 +156,6 @@ export const dict = (keys, values) => {
   }
 };
 
-export const center = (s, w) => {
-  let excess = w - s.length;
-  while (excess > 0) {
-    if (excess % 2) s += " ";
-    else s = " " + s;
-    excess -= 1;
-  }
-  return s;
-};
-
-export const display = (values) => {
-  // Used for debugging
-  let width = 0;
-  for (const s in squares) {
-    if (values[squares[s]].length > width) width = values[squares[s]].length;
-  }
-
-  width += 1;
-  let seg = "";
-  for (let i = 0; i < width; i++) seg += "---";
-  const line = "\n" + [seg, seg, seg].join("+");
-  let board = "";
-  for (const r in rows) {
-    for (const c in cols) {
-      board += center(values[rows[r] + cols[c]], width);
-      if (c === 2 || c === 5) board += "|";
-    }
-    if (r === 2 || r === 5) board += line;
-    board += "\n";
-  }
-  board += "\n";
-  return board;
-};
-
 export const isCompleted = (values) => {
   return all(Object.values(values), (square) => square.length === 1);
 };
@@ -213,7 +181,7 @@ export const all = (list, cb) => {
   return true;
 };
 
-// check if an unit is resolved.
+// check if an unit is resolved.t or f
 export const isUnitSolved = (unit, values) => {
   return (
     unit
@@ -236,44 +204,6 @@ export const getSquaresWithFewestCandidates = (values) => {
     .sort((s1, s2) => values[s1].length - values[s2].length);
 };
 
-export const hasPairValues = (list, values, digit) =>
-  list.filter(
-    (square) => values[square].length > 1 && values[square].includes(digit)
-  ).length === 2;
-
-export const getPairSquares = (list, values, digit) =>
-  list.filter((square) => values[square].includes(digit));
-
-export const getOuterPeers = (innerList, outerList, values) =>
-  innerList.filter(
-    (square) => !outerList.includes(square) && values[square].length > 1
-  );
-
-export const unsolvedSquares = (list, values) =>
-  list.filter((square) => values[square].length > 1);
-
-export const canEliminate = (list, values, digit) =>
-  list.filter((square) => values[square].includes(digit)).length > 0;
-
-export const getSquareUnitRowCol = (unit, square) => [
-  unit.filter((sq) => sq.includes(square[0])),
-  unit.filter((sq) => sq.includes(square[1])),
-];
-
-export const getPeers = (
-  unit,
-  unitRow,
-  unitRows,
-  unitCol,
-  unitCols,
-  values
-) => [
-  getOuterPeers(unitRow, unitRows, values),
-  getOuterPeers(unitCol, unitCols, values),
-  getOuterPeers(unit, unitRows, values),
-  getOuterPeers(unit, unitCols, values),
-];
-
 export const stringBoardValidation = async (entryString) => {
   if (!entryString) {
     return false;
@@ -292,7 +222,7 @@ export const stringBoardValidation = async (entryString) => {
 
 export const getinitialSudokuString = async (url) => {
   try {
-    const API_URL = `https://sudoku-puzzle-qlik.netlify.app/${url}.txt`;
+    const API_URL = `http://sudoku-puzzle-qlik.netlify.app/${url}.txt`;
 
     const res = await fetch(API_URL);
     const initialString = await res.text();
@@ -315,99 +245,6 @@ export const startTimer = () => {
 
 export const stopTimer = (startTimer) => {
   return Date.now() - startTimer;
-};
-
-export const _get_all_units = (rows, cols) => {
-  /* Return a list of all units (rows, cols, boxes)
-   */
-  var units = [];
-
-  // Rows
-  for (var ri in rows) {
-    units.push(cross(rows[ri], cols));
-  }
-
-  // Columns
-  for (var ci in cols) {
-    units.push(cross(rows, cols[ci]));
-  }
-
-  // Boxes
-  var row_squares = ["ABC", "DEF", "GHI"];
-  var col_squares = ["123", "456", "789"];
-  for (var rsi in row_squares) {
-    for (var csi in col_squares) {
-      units.push(cross(row_squares[rsi], col_squares[csi]));
-    }
-  }
-
-  return units;
-};
-
-export const _get_square_units_map = (squares, units) => {
-  /* Return a map of `squares` and their associated units (row, col, box)
-   */
-  var square_unit_map = {};
-
-  // For every square...
-  for (var si in squares) {
-    var cur_square = squares[si];
-
-    // Maintain a list of the current square's units
-    var cur_square_units = [];
-
-    // Look through the units, and see if the current square is in it,
-    // and if so, add it to the list of of the square's units.
-    for (var ui in units) {
-      var cur_unit = units[ui];
-
-      if (cur_unit.indexOf(cur_square) !== -1) {
-        cur_square_units.push(cur_unit);
-      }
-    }
-
-    // Save the current square and its units to the map
-    square_unit_map[cur_square] = cur_square_units;
-  }
-
-  return square_unit_map;
-};
-
-export const _get_square_peers_map = (squares, units_map) => {
-  /* Return a map of `squares` and their associated peers, i.e., a set of
-        other squares in the square's unit.
-        */
-  var square_peers_map = {};
-
-  // For every square...
-  for (var si in squares) {
-    var cur_square = squares[si];
-    var cur_square_units = units_map[cur_square];
-
-    // Maintain list of the current square's peers
-    var cur_square_peers = [];
-
-    // Look through the current square's units map...
-    for (var sui in cur_square_units) {
-      var cur_unit = cur_square_units[sui];
-
-      for (var ui in cur_unit) {
-        var cur_unit_square = cur_unit[ui];
-
-        if (
-          cur_square_peers.indexOf(cur_unit_square) === -1 &&
-          cur_unit_square !== cur_square
-        ) {
-          cur_square_peers.push(cur_unit_square);
-        }
-      }
-    }
-
-    // Save the current square an its associated peers to the map
-    square_peers_map[cur_square] = cur_square_peers;
-  }
-
-  return square_peers_map;
 };
 
 export const difficultyCounter = (grid) => {

@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { DIFFICULTY } from "../services/Constants";
+
 const DropMenu = ({ setdifficultyState }) => {
-  useEffect(() => {}, [setdifficultyState]);
-  const handleChange = (event) => {
-    event.target.value !== "0"
-      ? setdifficultyState(event.target.value)
+  const handleChange = ({ target }) => {
+    target.value !== "0"
+      ? setdifficultyState(target.value)
       : setdifficultyState(null);
   };
+
   return (
     <div className="relative inline-flex">
       <ChevronDownIcon className="absolute top-0 right-0 w-2 h-2 m-4 text-indigo-500 pointer-events-none" />
